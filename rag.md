@@ -714,3 +714,58 @@ recognition.onerror = (event) => {
 
 
 ```
+
+```python
+# Install dependencies
+!pip install groq gradio PyPDF2 --quiet
+
+import os
+import gradio as gr
+from PyPDF2 import PdfReader
+from groq import Groq
+
+# Set Groq API Key
+os.environ["GROQ_API_KEY"] = ""
+client = Groq(api_key=os.environ["GROQ_API_KEY"])
+
+# Load manual text
+def load_manual(path):
+    if path.endswith(".pdf"):
+        return "\n".join(
+            page.extract_text() or "" for page in PdfReader(path).pages
+        )
+    else:
+        return open(path, "r", encoding="utf-8").read()
+
+manual_text = load_manual("/content/Complete_Business_Manual_NovaTech_Solutions (1).pdf")
+
+# Chat function
+def chat(question):
+    response = client.chat.completions.create(
+        model="openai/gpt-oss-120b",
+        messages=[
+            {"role": "system", "content": "Answer only from the given manual."},
+            {"role": "user", "content": f"{manual_text}\n\nQ: {question}"}
+        ],
+        max_tokens=512
+    )
+    return response.choices[0].message.content
+
+# Gradio UI
+gr.Interface(
+    fn=chat,
+    inputs=gr.Textbox(
+        lines=2,
+        placeholder="Ask your question here...",
+        label="Ask Question"
+    ),
+    outputs=gr.Textbox(
+        lines=15,   # BIG OUTPUT BOX
+        label="Answer"
+    ),
+    title=" Manual AI Chatbot",
+    description="Ask anything from your uploaded manual",
+    theme=gr.themes.Soft()
+).launch()
+
+```
