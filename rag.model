@@ -525,7 +525,7 @@ if __name__ == "__main__":
         <div class="box">
 
             <div class="box-title">
-                🗣 Your Speech
+                 Your Speech
             </div>
 
             <textarea id="query"
@@ -536,7 +536,7 @@ if __name__ == "__main__":
         <div class="box">
 
             <div class="box-title">
-                🤖 AI Response
+                 AI Response
             </div>
 
             <div id="answer">
@@ -639,7 +639,7 @@ recognition.onend = async () => {
     micBtn.classList.remove("listening");
 
     statusText.innerHTML =
-        "🤖 Processing...";
+        " Processing...";
 
     const query =
         queryBox.value;
@@ -647,7 +647,7 @@ recognition.onend = async () => {
     if(query.trim() === ""){
 
         statusText.innerHTML =
-            "❌ No speech detected";
+            " No speech detected";
 
         return;
     }
@@ -674,7 +674,7 @@ recognition.onend = async () => {
         data.answer;
 
     statusText.innerHTML =
-        "✅ Response Ready";
+        " Response Ready";
 
 
     // ------------------------------------
@@ -702,7 +702,7 @@ recognition.onerror = (event) => {
     micBtn.classList.remove("listening");
 
     statusText.innerHTML =
-        "❌ Error: " + event.error;
+        " Error: " + event.error;
 
 };
 
