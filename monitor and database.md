@@ -450,3 +450,19 @@ LANGSMITH_PROJECT=Gemini-Agent
 
 
 ```
+
+```python
+flask
+gunicorn
+pymongo
+python-dotenv
+langchain
+langchain-google-genai
+langsmith
+
+```
+
+```python
+web: gunicorn app:app
+
+```
